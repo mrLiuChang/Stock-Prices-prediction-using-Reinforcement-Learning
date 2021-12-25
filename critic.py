@@ -1,8 +1,9 @@
-from keras import layers, models,regularizers,initializers
-from keras import backend as K
-from keras.optimizers import Adam
-
-
+from tensorflow.keras import layers, models,regularizers,initializers
+from tensorflow.keras import backend as K
+from tensorflow.keras.optimizers import Adam
+from tensorflow.python.framework.ops import disable_eager_execution
+disable_eager_execution()
+ 
 class Critic:
 
 
@@ -33,7 +34,7 @@ class Critic:
 
         self.model = models.Model(inputs=[states, actions], outputs=Q_values)
 
-        optimizer = Adam(lr=0.001)
+        optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
         self.model.compile(optimizer=optimizer, loss='mse')
 
         action_gradients = K.gradients(Q_values, actions)

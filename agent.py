@@ -4,7 +4,8 @@ import numpy as np
 from numpy.random import choice
 import random
 from collections import namedtuple, deque
-
+from tensorflow.python.framework.ops import disable_eager_execution
+disable_eager_execution()
 
 class ReplayBuffer:
     def __init__(self, buffer_size, batch_size):

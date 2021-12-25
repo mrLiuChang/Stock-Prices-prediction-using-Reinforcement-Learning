@@ -1,6 +1,10 @@
-from keras import layers, models,regularizers
-from keras import backend as K
-from keras.optimizers import Adam
+
+from tensorflow.keras import layers, models,regularizers
+from tensorflow.keras import backend as K
+from tensorflow.keras.optimizers import Adam
+from tensorflow.python.framework.ops import disable_eager_execution
+disable_eager_execution()
+
 
 class Actor:
 
@@ -28,7 +32,7 @@ class Actor:
         action_gradients = layers.Input(shape=(self.action_size,))
         loss = K.mean(-action_gradients * actions)
 
-        optimizer = Adam(lr=.00001)
+        optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
         updates_op = optimizer.get_updates(params=self.model.trainable_weights, loss=loss)
         self.train_fn = K.function(
             inputs=[self.model.input, action_gradients, K.learning_phase()],
