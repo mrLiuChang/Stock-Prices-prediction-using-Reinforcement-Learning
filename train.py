@@ -33,10 +33,12 @@ batch_size = 32
 agent = Agent(window_size, batch_size)
 Tr_data = get_Data("Train_data")
 l = len(Tr_data) - 1
-episode_count = 300
+
+episode_count = 100
 
 
 for i in range(episode_count):
+
     print("Episode " + str(i) + "|" + str(episode_count))
     state = get_State(Tr_data, 0, window_size + 1)
     agent.buying_data = []
